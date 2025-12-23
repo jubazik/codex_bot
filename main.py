@@ -1,36 +1,27 @@
 import asyncio
+import sys
+import os
+
+# Добавляем текущую директорию в путь
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+# Импортируем ВСЕ хендлеры ДО инициализации бота
+import handlers.start  # Это зарегистрирует хендлер /start
+import handlers.commands  # Если есть другие команды
+
 from config.settings import bot
-from sql.psql import users
-from menu import menu_
 
 
+async def main():
+    """Основная функция запуска бота"""
+    print("Запуск бота...")
 
+    # Дополнительная инициализация если нужно
+    # handlers.register_handlers()
 
-@bot.message_handler(commands=['get'])
-async def get_message(message):
-    if users.get_user(message.from_user.id)  == message.from_user.id:
-        await bot.send_message(message.chat.id, users.get_user(message.from_user.id))
-
-#
-@bot.message_handler(commands=['users'])
-async def get_users(message):
-    users = users.get_user(message.from_user.id)
-    await bot.send_message(message.chat.id, users )
-
-@bot.message_handler(commands=['delete'])
-async def delete_message(message):
-    try:
-        if users.get_user(message.from_user.id):
-            users.delete_user(message.from_user.id)
-            await bot.send_message(message.chat.id, f'пользователь {message.from_user.first_name} успешно удален ')
-
-        else:
-            await bot.send_message(message.chat.id, 'Пользоваетеля нет в базе')
-    except:
-        await bot.send_message(message.chat.id,'произошла ошибка')
-
-
+    # Запускаем бота
+    await bot.polling()
 
 
 if __name__ == "__main__":
-    asyncio.run(bot.polling())
+    asyncio.run(main())

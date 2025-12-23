@@ -3,6 +3,11 @@ from config.settings import bot
 from sql.psql import users
 from menu import menu_
 
+
+def get_menu():
+    from menu import menu_
+    return menu_
+
 @bot.message_handler(commands=['start'])
 async def send_welcome(message):
     try:

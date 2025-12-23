@@ -1,13 +1,13 @@
+
 from telebot.async_telebot import AsyncTeleBot
-from dotenv import load_dotenv
-
 import os
-
+from dotenv import load_dotenv
 load_dotenv()
-token = os.getenv('TELEGRAM_BOT_TOKEN')
-if not token:
-    raise Exception("Токен не найден в переменных окружения")
 
+BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+bot = AsyncTeleBot(BOT_TOKEN)
 
-
-bot = AsyncTeleBot(token=token)
+# Инициализация бота (без импорта хендлеров здесь)
+def init_bot():
+    """Функция для инициализации бота"""
+    return bot
