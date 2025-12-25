@@ -8,7 +8,7 @@ def menu_():
     )
 
     markup.row(
-        KeyboardButton("кнопка_1", request_contact=False),
+        KeyboardButton("/sendphoto", request_contact=False),
         KeyboardButton('Кнопка_2', request_contact=False)
     )
 
