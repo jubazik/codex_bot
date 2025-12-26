@@ -1,9 +1,10 @@
 import sqlite3
-import  datetime
+
 from pathlib import Path
 
 BASE_DIR = Path(__file__).parent
 path_to_db = BASE_DIR / '../database.db'
+
 
 # status_payment=False, date_joined=datetime.date.today()
 class Users:
@@ -25,21 +26,37 @@ class Users:
                         )
                 """)
             print("Таблица 'users'  проверена/создана")
+            self.cursor.execute("""
+                CREATE TABLE IF NOT EXISTS categories (
+                        id INTEGER PRIMARY KEY,
+                        name TEXT NOT NULL,
+                        description TEXT,
+                        photo_url TEXT
+                        )
+                """)
+
+            print("Таблица 'categories'  проверена/создана")
+            self.cursor.execute("""
+                CREATE TABLE IF NOT EXISTS products (
+                        id INTEGER PRIMARY KEY,
+                        category_id INTEGER,
+                        name TEXT NOT NULL,
+                        description TEXT,
+                        price INTEGER,
+                        photo_url TEXT,
+                        FOREIGN KEY (category_id) REFERENCES categories (id)
+                        )
+                """)
+            print("Таблица 'products'  проверена/создана")
+
+    def get_category_id(self, id):
+        with self.connection:
+            self.cursor.execute(f"SELECT * FROM  categories id = ?", (id,) )
 
     def new_user(self, id, first_name, last_name=None, ):
         with self.connection:
             return self.cursor.execute(f"INSERT INTO users (id, first_name, last_name) VALUES (?, ?, ?)",
                                        (id, first_name, last_name))
-
-    # def update_date_users(self, id, date_joined):
-    #     """ Обновление даты пользователя """
-    #     with self.connection:
-    #         return self.cursor.execute(f"UPDATE users SET date_joined = ? WHERE id = ?",(date_joined, id))
-    #
-    # #
-    # def update_status_payment(self, id, status_payment):
-    #     with self.connection:
-    #         return self.cursor.execute(f"UPDATE users SET status = ? WHERE id = ?",(status_payment, id))
 
     def delete_user(self, id):
         with self.connection:
@@ -59,7 +76,6 @@ class Users:
                         row_list[i] = None
                 return tuple(row_list)
             return None
-
 
     def get_users(self):
         user = []
