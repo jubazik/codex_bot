@@ -1,6 +1,6 @@
-from telebot.types import  MenuButtonWebApp, WebAppInfo, ReplyKeyboardMarkup, KeyboardButton
-from config.settings import bot
-from sql.psql import users
+from telebot.types import  MenuButtonWebApp, WebAppInfo
+from app.bot.config.settings import bot
+from app.sql.psql import users
 from menu import menu_
 
 
@@ -26,6 +26,9 @@ async def send_welcome(message):
             await bot.send_message(message.chat.id,
                                    text=f'Добро пожаловать {message.from_user.first_name} Какие будут указании! {users.get_user(message.from_user.id)}', reply_markup=menu_())
 
-    except EOFError as e:
-        await bot.send_message(message.chat.id, f"Произошла ошибка {str(e)} обратитесь к одминистратору!")
-        print(f"Произошла ошибка {str(e)} обратитесь к одминистратору!")
+
+    except Exception as e:  # перехватываем все исключения
+
+        await bot.send_message(message.chat.id, f"Произошла ошибка {str(e)} обратитесь к администратору!")
+
+        print(f"Произошла ошибка {str(e)} обратитесь к администратору!")

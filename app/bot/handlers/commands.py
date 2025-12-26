@@ -1,5 +1,5 @@
-from sql.psql import users
-from config.settings import bot
+from app.sql.psql import users
+from app.bot.config.settings import bot
 
 
 @bot.message_handler(commands=['sendphoto'])
