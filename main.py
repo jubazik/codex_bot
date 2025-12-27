@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from app.bot.config.settings import bot
 
-import app.bot.handlers  # Предполагается, что хендлеры в app/bot/handlers.py
+import app.bot.handlers.commands # Предполагается, что хендлеры в app/bot/handlers.py
 
 async def main():
     """Основная функция запуска бота"""

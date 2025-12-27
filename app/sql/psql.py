@@ -7,7 +7,7 @@ path_to_db = BASE_DIR / '../database.db'
 
 
 # status_payment=False, date_joined=datetime.date.today()
-class Users:
+class Database:
     def __init__(self, path_to_db):
         self.path_to_db = path_to_db
         self.connection = sqlite3.connect(path_to_db, check_same_thread=False)
@@ -106,6 +106,6 @@ class Users:
 # tables.insert_user()
 #
 # #
-users = Users(path_to_db)
+database = Database(path_to_db)
 # print(users.get_all_users())
-print(users.get_users())
+# print(users.get_users())

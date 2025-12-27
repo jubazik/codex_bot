@@ -1,6 +1,6 @@
 from telebot.types import MenuButtonWebApp, WebAppInfo
 from app.bot.config.settings import bot
-from app.sql.psql import users
+from app.sql.psql import database
 from app.bot.menu import menu_
 from app.bot.menu import categories_keyboard
 
@@ -22,8 +22,8 @@ async def send_welcome(message):
     👇 Выберите категорию товаров:
         """
     try:
-        if users.get_user(message.from_user.id) is None:
-            users.new_user(message.from_user.id, message.from_user.first_name, message.from_user.last_name)
+        if database.get_user(message.from_user.id) is None:
+            database.new_user(message.from_user.id, message.from_user.first_name, message.from_user.last_name)
             await bot.send_message(message.chat.id,
                                    welcome_text,
                                    reply_markup=categories_keyboard())
@@ -37,7 +37,8 @@ async def send_welcome(message):
             await bot.set_chat_menu_button(chat_id=message.from_user.id, menu_button=commands)
             await bot.send_message(message.chat.id,
                                    text=welcome_text,
-                                   reply_markup=categories_keyboard())
+                                   reply_markup=menu_())
+            await bot.send_message(message.chat.id, text='',reply_markup=categories_keyboard())
 
 
     except Exception as e:  # перехватываем все исключения
