@@ -35,10 +35,8 @@ async def send_welcome(message):
             )
 
             await bot.set_chat_menu_button(chat_id=message.from_user.id, menu_button=commands)
-            await bot.send_message(message.chat.id,
-                                   text=welcome_text,
-                                   reply_markup=menu_())
-            await bot.send_message(message.chat.id, text='',reply_markup=categories_keyboard())
+            await bot.send_message(message.chat.id, welcome_text, reply_markup=menu_())
+            await bot.send_message(message.chat.id, text='📋 Доступные категории:',reply_markup=categories_keyboard())
 
 
     except Exception as e:  # перехватываем все исключения
