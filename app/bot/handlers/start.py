@@ -4,6 +4,7 @@ from app.sql.psql import database
 from app.bot.menu import menu_
 from app.bot.menu import categories_keyboard
 
+
 def get_menu():
     from app.bot.menu import menu_
     return menu_
@@ -24,9 +25,9 @@ async def send_welcome(message):
     try:
         if database.get_user(message.from_user.id) is None:
             database.new_user(message.from_user.id, message.from_user.first_name, message.from_user.last_name)
-            await bot.send_message(message.chat.id,
-                                   welcome_text,
-                                   reply_markup=categories_keyboard())
+            await bot.send_message(message.chat.id, welcome_text, reply_markup=menu_())
+            await bot.send_message(message.chat.id, text='📋 Доступные категории:', reply_markup=categories_keyboard())
+
         else:
             commands = MenuButtonWebApp(
                 type="web_app",
@@ -36,7 +37,7 @@ async def send_welcome(message):
 
             await bot.set_chat_menu_button(chat_id=message.from_user.id, menu_button=commands)
             await bot.send_message(message.chat.id, welcome_text, reply_markup=menu_())
-            await bot.send_message(message.chat.id, text='📋 Доступные категории:',reply_markup=categories_keyboard())
+            await bot.send_message(message.chat.id, text='📋 Доступные категории:', reply_markup=categories_keyboard())
 
 
     except Exception as e:  # перехватываем все исключения
