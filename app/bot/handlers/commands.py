@@ -1,7 +1,8 @@
+from telebot import types
 from telebot.async_telebot import logger
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from app.bot.menu import categories_keyboard, ReplyKeyboardMarkup, categories_bras
+from app.bot.menu import categories_keyboard, ReplyKeyboardMarkup, categories_bras, menu_
 from app.sql.psql import database
 from app.bot.config.settings import bot
 
@@ -77,14 +78,14 @@ async def callback_query(call):
             await bot.edit_message_text(chat_id=call.message.chat.id,  message_id=call.message.message_id, text="🎽 БЮСТГАЛЬТЕРЫ", reply_markup=categories_bras())
 
         # Обработка контактов
-        elif call.data == "contacts":
+        elif call.sen_message == "ℹ️ О нас / Контакты":
             await bot.edit_message_text(
                 chat_id=call.message.chat.id,
                 message_id=call.message.message_id,
                 text="📞 Наши контакты:\n\nТелефон: +7 (XXX) XXX-XX-XX\nEmail: shop@example.com\nАдрес: г. Москва, ул. Примерная, д. 1",
-                reply_markup=InlineKeyboardMarkup().add(
-                    InlineKeyboardButton("⬅️ Назад", callback_data="back_to_categories")
-                )
+                # reply_markup=InlineKeyboardMarkup().add(
+                #     InlineKeyboardButton("⬅️ Назад", callback_data="back_to_categories")
+                # )
             )
 
     except Exception as e:
@@ -92,13 +93,19 @@ async def callback_query(call):
         await bot.answer_callback_query(call.id, "Произошла ошибка")
 
 
-
-@bot.message_handler(commands=['sendphoto'])
-async def request_photo(message):
-    await bot.reply_to(
-        message,
-        "📸 Пожалуйста, отправьте фото из вашей галереи или сделайте новое фото"
+@bot.message_handler(func=lambda message: message.text=="ℹ️ О нас / Контакты")
+async def about_contacts(message):
+    await bot.send_message(message.chat.id,
+        text="📞 Наши контакты:\n\n"
+             "Телефон: +7 (XXX) XXX-XX-XX\n"
+             "Email: shop@example.com\n"
+             "Адрес: г. Москва, ул. Примерная, д. 1",
+        reply_markup=menu_()
     )
+
+@bot.message_handler(func=lambda message: message.text=="🛍️ Каталог")
+async def catalog(message):
+    await bot.send_message(message.chat.id, text='📋 Доступные категории:', reply_markup=categories_keyboard())
 
 
 # Обработчик входящих фото

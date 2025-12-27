@@ -15,10 +15,10 @@ def menu_():
     )
 
     markup.row(
-        KeyboardButton("⭐ Избранное", request_contact=True),
+        KeyboardButton("⭐ Избранное", request_contact=False),
     )
     markup.row(
-        KeyboardButton("📦 Мои заказы", request_contact=True),
+        KeyboardButton("📦 Мои заказы", request_contact=False, ),
         KeyboardButton('🛒 Корзина ', request_contact=False),
 
     )
