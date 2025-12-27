@@ -1,8 +1,5 @@
-from telebot import types
 from telebot.async_telebot import logger
-from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
-
-from app.bot.menu import categories_keyboard, ReplyKeyboardMarkup, categories_bras, menu_
+from app.bot.menu import categories_keyboard, categories_bras, menu_
 from app.sql.psql import database
 from app.bot.config.settings import bot
 
@@ -130,26 +127,26 @@ async def handle_received_photo(message):
     )
 
 
-@bot.message_handler(commands=['get'])
-async def get_message(message):
-    if database.get_user(message.from_user.id)  == message.from_user.id:
-        await bot.send_message(message.chat.id, database.get_user(message.from_user.id))
-
-
-
-@bot.message_handler(commands=['users'])
-async def get_users(message):
-    users_ = database.get_user(message.from_user.id)
-    await bot.send_message(message.chat.id, users_ )
-
-@bot.message_handler(commands=['delete'])
-async def delete_message(message):
-    try:
-        if database.get_user(message.from_user.id):
-            database.delete_user(message.from_user.id)
-            await bot.send_message(message.chat.id, f'пользователь {message.from_user.first_name} успешно удален ')
-
-        else:
-            await bot.send_message(message.chat.id, 'Пользоваетеля нет в базе')
-    except:
-        await bot.send_message(message.chat.id,'произошла ошибка')
+# @bot.message_handler(commands=['get'])
+# async def get_message(message):
+#     if database.get_user(message.from_user.id)  == message.from_user.id:
+#         await bot.send_message(message.chat.id, database.get_user(message.from_user.id))
+#
+#
+#
+# @bot.message_handler(commands=['users'])
+# async def get_users(message):
+#     users_ = database.get_user(message.from_user.id)
+#     await bot.send_message(message.chat.id, users_ )
+#
+# @bot.message_handler(commands=['delete'])
+# async def delete_message(message):
+#     try:
+#         if database.get_user(message.from_user.id):
+#             database.delete_user(message.from_user.id)
+#             await bot.send_message(message.chat.id, f'пользователь {message.from_user.first_name} успешно удален ')
+#
+#         else:
+#             await bot.send_message(message.chat.id, 'Пользоваетеля нет в базе')
+#     except:
+#         await bot.send_message(message.chat.id,'произошла ошибка')
