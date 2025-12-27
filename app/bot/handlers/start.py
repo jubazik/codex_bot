@@ -31,8 +31,8 @@ async def send_welcome(message):
         else:
             commands = MenuButtonWebApp(
                 type="web_app",
-                text='VPN',
-                web_app=WebAppInfo(url="https://vpbetli.ru:23421/panel/")
+                text='Магазин',
+                web_app=WebAppInfo(url="Нужно добавить url-адрес своего магазина")
             )
 
             await bot.set_chat_menu_button(chat_id=message.from_user.id, menu_button=commands)
