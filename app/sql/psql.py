@@ -15,10 +15,17 @@ class Database:
         self.create_table()
 
     def create_table(self):
+        """
+        таблица users предназначена для пользователя
+        таблица categories предназначена для категории товаров
+        таблица products предлназначена для товаров она связана с таблицей категории
+        :return:
+        """
         with self.connection:
             self.cursor.execute("""
                 CREATE TABLE IF NOT EXISTS users (
                         id INTEGER PRIMARY KEY,
+                        user_id INTEGER,
                         first_name TEXT,
                         last_name TEXT,
                         status_payment BOOLEAN,
@@ -26,6 +33,7 @@ class Database:
                         )
                 """)
             print("Таблица 'users'  проверена/создана")
+
             self.cursor.execute("""
                 CREATE TABLE IF NOT EXISTS categories (
                         id INTEGER PRIMARY KEY,
@@ -34,6 +42,14 @@ class Database:
                         photo_url TEXT
                         )
                 """)
+            self.cursor.execute("""
+                CREATE TABLE IF NOT EXISTS subcategories (
+                    id INTEGER PRIMARY KEY,
+                    subcategor_id INTEGER
+                    name TEXT NOT NULL,
+                    FOREIGN KEY (category_id) REFERENCES categories (id)
+                    
+            """)
 
             print("Таблица 'categories'  проверена/создана")
             self.cursor.execute("""
@@ -44,7 +60,9 @@ class Database:
                         description TEXT,
                         price INTEGER,
                         photo_url TEXT,
-                        FOREIGN KEY (category_id) REFERENCES categories (id)
+                        FOREIGN KEY (category_id) REFERENCES categories (id),
+                        FOREIGN KEY (subcategor_id) REFERENCES subcategories (id),
+                        FOREIGN KEY (user_id) REFERENCES users (id)
                         )
                 """)
             print("Таблица 'products'  проверена/создана")
