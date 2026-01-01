@@ -1,5 +1,4 @@
 from functools import lru_cache
-
 from pydantic import ValidationError
 from pydantic_settings import BaseSettings  # Базовый класс для настроек
 
@@ -8,6 +7,12 @@ class Settings(BaseSettings):
 
 
 
+    #JWT
+    SECRET_KEY : str
+    ALGORITHM : str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+
+    CORS_ORIGINS : list = ['http://localhost:3000']
     class Config:
         env_file = ".env"
 
