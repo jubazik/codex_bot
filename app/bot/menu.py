@@ -1,6 +1,6 @@
-from telebot.types import MenuButtonWebApp, WebAppInfo, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, \
+from telebot.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, \
     InlineKeyboardButton
-from app.sql.psql import database
+
 
 def menu_():
     markup = ReplyKeyboardMarkup(

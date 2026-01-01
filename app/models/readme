@@ -1,0 +1,5 @@
+ # SQLAlchemy модели
+│   │   ├── product.py
+│   │   ├── category.py
+│   │   ├── order.py
+│   │   ├── user.py

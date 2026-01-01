@@ -1,8 +1,6 @@
-from telebot.types import MenuButtonWebApp, WebAppInfo
 from app.bot.config.settings import bot
-from app.sql.psql import database
+from app.core.psql import database
 from app.bot.menu import menu_
-from app.bot.menu import categories_keyboard
 
 
 def get_menu():

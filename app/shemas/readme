@@ -1,0 +1,6 @@
+# Pydantic схемы
+│   │   ├── product.py
+│   │   ├── category.py
+│   │   ├── order.py
+│   │   ├── user.py
+│   │   └── __init__.py

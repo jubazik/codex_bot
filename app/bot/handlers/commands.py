@@ -1,6 +1,4 @@
-from telebot.async_telebot import logger
 from app.bot.menu import categories_keyboard, categories_bras, menu_
-from app.sql.psql import database
 from app.bot.config.settings import bot
 from app.text import help_text
 

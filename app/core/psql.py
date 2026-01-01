@@ -67,20 +67,19 @@ class Database:
                 """)
             print("Таблица 'products'  проверена/создана")
 
+    def new_category(self):
+        pass
     def get_category_id(self, id):
         with self.connection:
             self.cursor.execute(f"SELECT * FROM  categories id = ?", (id,) )
+
 
     def new_user(self, id, first_name, last_name=None, ):
         with self.connection:
             return self.cursor.execute(f"INSERT INTO users (id, first_name, last_name) VALUES (?, ?, ?)",
                                        (id, first_name, last_name))
 
-    def delete_user(self, id):
-        with self.connection:
-            return self.cursor.execute(f"DELETE FROM users WHERE {id} = ?", (id,))
-
-    def get_user(self, user_id):
+    def examination_user(self, user_id):
         """Получает пользователя по ID, преобразует 'None' в None"""
         with self.connection:
             self.cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
@@ -95,35 +94,8 @@ class Database:
                 return tuple(row_list)
             return None
 
-    def get_users(self):
-        user = []
-        with self.connection:
-            users = self.cursor.execute("SELECT * FROM users")
-            for item in users.fetchall():
-                user.append(item)
-
-            return user
 
 
-# class Tables:
-#     def __init__(self, path_to_db):
-#         self.connection = sqlite3.connect(path_to_db, check_same_thread=False)
-#         self.cursor = self.connection.cursor()
-#
-#     def insert_user(self):
-#         with self.connection:
-#             return self.cursor.execute("CREATE TABLE users (id INTEGER PRIMARY KEY, first_name TEXT , last_name TEXT)")
-#
-#     def close_connection(self):
-#         with self.connection:
-#             return self.connection.close()
-#
-
-#
-# tables = Tables(path_to_db)
-# tables.insert_user()
-#
-# #
 database = Database(path_to_db)
 # print(users.get_all_users())
 # print(users.get_users())

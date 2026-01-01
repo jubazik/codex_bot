@@ -2,7 +2,7 @@ from telebot.async_telebot import AsyncTeleBot
 import os
 from dotenv import load_dotenv
 
-from app.bot.config.config import settings
+from app.core.config import settings
 
 load_dotenv("/Users/juba/projects/codex/.env")
 
